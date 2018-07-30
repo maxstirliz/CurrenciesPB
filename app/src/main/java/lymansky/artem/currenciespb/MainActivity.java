@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int USD_INDEX = 0;
     private static final int EUR_INDEX = 1;
 
+    private static final String COURSE_CASH = "course_cash";
+
     private TextView usdBuy;
     private TextView usdSale;
     private TextView eurBuy;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Initializations
         usdBuy = findViewById(R.id.usd_buy);
         usdSale = findViewById(R.id.usd_sale);
         eurBuy = findViewById(R.id.eur_buy);
@@ -43,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
         internetBanking = findViewById(R.id.internet_banking);
         cashExchange = findViewById(R.id.cash_exchange);
 
-        Retrofit.Builder builder = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.privatbank.ua/")
-                .addConverterFactory(GsonConverterFactory.create());
-
-        Retrofit retrofit = builder.build();
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         client = retrofit.create(PrivatBankClient.class);
+
         cashExchange.setChecked(true);
+        if(savedInstanceState != null) {
+            cashExchange.setChecked(savedInstanceState.getBoolean(COURSE_CASH));
+        }
         checkExchange();
 
         cashExchange.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
                 checkExchange();
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(COURSE_CASH, cashExchange.isChecked());
     }
 
     private void getData(int coursId) {
