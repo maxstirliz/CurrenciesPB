@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">CurrenciesPB</string>
+
+    <string name="exchange_rates">Exchange Rates</string>
+    <string name="buy">Buy</string>
+    <string name="sale">Sale</string>
+
+    <string name="internet_banking">Internet Banking</string>
+    <string name="cash_exchange">Cash Exchange</string>
+
+    <string name="uah">UAH</string>
+    <string name="usd">USD</string>
+    <string name="eur">EUR</string>
+    <string name="default_exchange">--.--</string>
+</resources>
